@@ -32,6 +32,7 @@ class Proveedores(Base):
 class Transacciones(Base):
     __tablename__ = 'transacciones'
     id = Column(Integer, primary_key=True)
+    uuid = Column(String, unique=True)
     fecha = Column(TIMESTAMP, server_default=func.now())
     total = Column(Float)
     tipo_transaccion_id = Column(Integer, ForeignKey('tipo_transacciones.id'))
@@ -57,10 +58,11 @@ class DetalleTransacciones(Base):
 class Kardex(Base):
     __tablename__ = 'kardex'
     id = Column(Integer, primary_key=True)
+    uuid = Column(String)
+    tipo_transaccion_id = int
     productos_id = Column(Integer, ForeignKey('productos.id'))
     cantidad = Column(Integer)
-    costo = Column(Float)
-    fecha = Column(TIMESTAMP)
+    fecha = Column(TIMESTAMP, server_default=func.now())
 
 
 class Productos(Base):

@@ -1,9 +1,10 @@
+from datetime import datetime
 from typing import Optional, List
 
 from pydantic import BaseModel
 
 from dto.cliente_dto import ClienteDTO, ClienteTransaccionDTO
-from dto.detalle_transaccion_dto import DetalleTransaccionDTO
+from dto.detalle_transaccion_dto import DetalleTransaccionDTO, DetalleTransaccionResponseDTO
 
 
 class TransaccionDTO(BaseModel):
@@ -17,8 +18,19 @@ class TransaccionDTO(BaseModel):
 
 
 class TransaccionVentaDTO(BaseModel):
-    cliente: ClienteTransaccionDTO
-    detalles: List[DetalleTransaccionDTO]
+    cliente: Optional[ClienteTransaccionDTO]
+    detalles: Optional[List[DetalleTransaccionDTO]]
+
+    class Config:
+        orm_mode = True
+
+
+class TransaccionResponseDTO(BaseModel):
+    uuid: str
+    cliente: Optional[ClienteTransaccionDTO]
+    detalle_transacciones: Optional[List[DetalleTransaccionResponseDTO]]
+    total: float
+    fecha: datetime
 
     class Config:
         orm_mode = True

@@ -7,7 +7,7 @@ from starlette.responses import JSONResponse
 import services.producto_service as producto_service
 from dto.cliente_dto import ClienteDTO
 from dto.producto_dto import ProductoDTO, ProductoCreateDTO
-from dto.transaccion_dto import TransaccionVentaDTO
+from dto.transaccion_dto import TransaccionVentaDTO, TransaccionResponseDTO
 from services import transaccion_service, tipo_transaccion_service
 from services.cliente_service import obtener_clientes, buscar_cliente_por_tipo_y_num_identificacion, crear_cliente
 
@@ -63,7 +63,7 @@ async def guardar_productos(producto_dto: ProductoCreateDTO):
     return producto_service.crear_producto(producto_dto)
 
 
-@app.post("/transacciones/venta", response_model=TransaccionVentaDTO, tags=["Transacciones"])
+@app.post("/transacciones/venta", response_model=TransaccionResponseDTO, tags=["Transacciones"])
 async def guardar_transaccion(transaccion_dto: TransaccionVentaDTO):
     return transaccion_service.crear_transaccion_venta(transaccion_dto)
 
