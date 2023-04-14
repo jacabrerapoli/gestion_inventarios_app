@@ -26,7 +26,7 @@ async def root():
     response_model=List[ClienteDTO],
     tags=["Clientes"],
     description="Este servicio permite buscar todos los clientes")
-async def obtener_cliente_por_tipo_y_num_identificacion():
+async def buscar_todos_los_clientes():
     return obtener_clientes()
 
 
@@ -69,12 +69,12 @@ async def guardar_productos(producto_dto: ProductoCreateDTO):
 
 
 @app.post("/transacciones/ventas", response_model=TransaccionResponseVentaDTO, tags=["Transacciones"])
-async def guardar_transaccion(transaccion_dto: TransaccionVentaDTO):
+async def guardar_transaccion_ventas(transaccion_dto: TransaccionVentaDTO):
     return transaccion_service.crear_transaccion_venta(transaccion_dto)
 
 
 @app.post("/transacciones/compras", response_model=TransaccionResponseCompraDTO, tags=["Transacciones"])
-async def guardar_transaccion(transaccion_dto: TransaccionCompraDTO):
+async def guardar_transaccion_compras(transaccion_dto: TransaccionCompraDTO):
     try:
         return transaccion_service.crear_transaccion_compra(transaccion_dto)
     except Exception as e:
