@@ -26,7 +26,7 @@ class TestDatabase(unittest.TestCase):
         self.assertEqual(len(resultado), len(clientes_falsos))
         self.assertIsInstance(resultado[0], ClienteDTO)
         self.assertEqual(resultado[0].tipo_identificacion, clientes_falsos[0].tipo_identificacion)
-        self.assertEqual(resultado[0].num_identificacion, clientes_falsos[0].num_identificacion)
+        self.assertEqual(resultado[0].numero_identificacion, clientes_falsos[0].num_identificacion)
         self.assertEqual(resultado[0].nombres, clientes_falsos[0].nombres)
         self.assertEqual(resultado[0].apellidos, clientes_falsos[0].apellidos)
         self.assertEqual(resultado[0].correo, clientes_falsos[0].correo)

@@ -21,6 +21,8 @@ class Clientes(Base):
 class Proveedores(Base):
     __tablename__ = 'proveedores'
     id = Column(Integer, primary_key=True)
+    tipo_identificacion = Column(String(45))
+    numero_identificacion = Column(String(45))
     nombre_empresa = Column(String(45))
     nombre_representante = Column(String(45))
     apellido_representante = Column(String(45))
@@ -58,8 +60,8 @@ class DetalleTransacciones(Base):
 class Kardex(Base):
     __tablename__ = 'kardex'
     id = Column(Integer, primary_key=True)
-    uuid = Column(String)
-    tipo_transaccion_id = int
+    uuid = Column(String(50))
+    tipo_transaccion = Column(Integer)
     productos_id = Column(Integer, ForeignKey('productos.id'))
     cantidad = Column(Integer)
     fecha = Column(TIMESTAMP, server_default=func.now())

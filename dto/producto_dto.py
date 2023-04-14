@@ -25,7 +25,7 @@ class ProductoCreateDTO(BaseModel):
         orm_mode = True
 
 
-class ProductoVentaResponseDTO(BaseModel):
+class ProductoResponseDTO(BaseModel):
     sku: str
     nombre: str
     marca: str

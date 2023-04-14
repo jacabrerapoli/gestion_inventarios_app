@@ -18,7 +18,7 @@ class ClienteDTO(BaseModel):
                 "nombre": "John",
                 "apellido": "Doe",
                 "tipo_identificacion": "CC",
-                "num_identificacion": "123456789",
+                "numero_identificacion": "123456789",
                 "direccion": "Calle Falsa 123",
                 "telefono": "1234567890"
             }

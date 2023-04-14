@@ -2,7 +2,7 @@ from typing import Optional
 
 from pydantic import BaseModel
 
-from dto.producto_dto import ProductoVentaResponseDTO
+from dto.producto_dto import ProductoResponseDTO
 
 
 class DetalleTransaccionDTO(BaseModel):
@@ -16,7 +16,7 @@ class DetalleTransaccionDTO(BaseModel):
 class DetalleTransaccionResponseDTO(BaseModel):
     cantidad: int
     subtotal: float
-    producto: Optional[ProductoVentaResponseDTO]
+    producto: Optional[ProductoResponseDTO]
 
     class Config:
         orm_mode = True

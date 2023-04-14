@@ -1,14 +1,16 @@
 from typing import List
 
-from fastapi import FastAPI
+from fastapi import FastAPI, HTTPException
 from fastapi.encoders import jsonable_encoder
 from starlette.responses import JSONResponse
 
 import services.producto_service as producto_service
 from dto.cliente_dto import ClienteDTO
 from dto.producto_dto import ProductoDTO, ProductoCreateDTO
-from dto.transaccion_dto import TransaccionVentaDTO, TransaccionResponseDTO
-from services import transaccion_service, tipo_transaccion_service
+from dto.proveedor_dto import ProveedorRequestDTO
+from dto.transaccion_dto import TransaccionVentaDTO, TransaccionResponseVentaDTO, TransaccionCompraDTO, \
+    TransaccionResponseCompraDTO
+from services import transaccion_service, tipo_transaccion_service, proveedor_service, kardex_service
 from services.cliente_service import obtener_clientes, buscar_cliente_por_tipo_y_num_identificacion, crear_cliente
 
 app = FastAPI(title="GestionInventarios")
@@ -23,7 +25,7 @@ async def root():
     path="/clientes",
     response_model=List[ClienteDTO],
     tags=["Clientes"],
-    description="Este servicio permite buscar clientes por tipo y numero de documento")
+    description="Este servicio permite buscar todos los clientes")
 async def obtener_cliente_por_tipo_y_num_identificacion():
     return obtener_clientes()
 
@@ -33,8 +35,11 @@ async def obtener_cliente_por_tipo_y_num_identificacion(
         tipo_identificacion: str,
         num_identificacion: str
 ):
-    result = buscar_cliente_por_tipo_y_num_identificacion(tipo_identificacion, num_identificacion)
-    return jsonable_encoder(result)
+    try:
+        result = buscar_cliente_por_tipo_y_num_identificacion(tipo_identificacion, num_identificacion)
+        return jsonable_encoder(result)
+    except Exception as e:
+        raise HTTPException(status_code=400, detail=str(e))
 
 
 @app.post("/clientes", response_model=ClienteDTO, tags=["Clientes"])
@@ -63,11 +68,34 @@ async def guardar_productos(producto_dto: ProductoCreateDTO):
     return producto_service.crear_producto(producto_dto)
 
 
-@app.post("/transacciones/venta", response_model=TransaccionResponseDTO, tags=["Transacciones"])
+@app.post("/transacciones/ventas", response_model=TransaccionResponseVentaDTO, tags=["Transacciones"])
 async def guardar_transaccion(transaccion_dto: TransaccionVentaDTO):
     return transaccion_service.crear_transaccion_venta(transaccion_dto)
+
+
+@app.post("/transacciones/compras", response_model=TransaccionResponseCompraDTO, tags=["Transacciones"])
+async def guardar_transaccion(transaccion_dto: TransaccionCompraDTO):
+    try:
+        return transaccion_service.crear_transaccion_compra(transaccion_dto)
+    except Exception as e:
+        raise HTTPException(status_code=400, detail=str(e))
 
 
 @app.get("/tipos_de_transaccion", response_model=List[TransaccionVentaDTO], tags=["Tipos de Transaccion"])
 async def buscar_tipo_de_transaccion_por_tipo(tipo: str):
     return tipo_transaccion_service.buscar_tipo_transaccion_por_tipo(tipo)
+
+
+@app.get("/proveedores", response_model=List[ProveedorRequestDTO], tags=["Proveedores"])
+async def buscar_proveedores():
+    return proveedor_service.buscar_proveedores()
+
+
+@app.post("/proveedores", response_model=ProveedorRequestDTO, tags=["Proveedores"])
+async def crear_proveedor(proveedor_dto: ProveedorRequestDTO):
+    return proveedor_service.crear_proveedor(proveedor_dto)
+
+
+@app.get("/kardex", tags=["Kardex"])
+async def listar_kardex_por_producto_sku(sku: str):
+    return kardex_service.listar_kardex_por_producto_sku(sku)
