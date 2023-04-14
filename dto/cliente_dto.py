@@ -15,12 +15,13 @@ class ClienteDTO(BaseModel):
         allow_population_by_field_name = True
         schema_extra = {
             "example": {
-                "nombre": "John",
-                "apellido": "Doe",
                 "tipo_identificacion": "CC",
-                "numero_identificacion": "123456789",
+                "num_identificacion": "123456789",
+                "nombres": "John",
+                "apellidos": "Doe",
                 "direccion": "Calle Falsa 123",
-                "telefono": "1234567890"
+                "telefono": "1234567890",
+                "correo": "johndoe@example.com"
             }
         }
 

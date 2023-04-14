@@ -34,7 +34,7 @@ class Proveedores(Base):
 class Transacciones(Base):
     __tablename__ = 'transacciones'
     id = Column(Integer, primary_key=True)
-    uuid = Column(String, unique=True)
+    uuid = Column(String(50), unique=True)
     fecha = Column(TIMESTAMP, server_default=func.now())
     total = Column(Float)
     tipo_transaccion_id = Column(Integer, ForeignKey('tipo_transacciones.id'))
