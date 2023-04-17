@@ -75,6 +75,7 @@ class Productos(Base):
     marca = Column(String(45))
     linea = Column(String(45))
     descripcion = Column(Text)
+    cantidad = Column(Integer)
     costo = Column(Float)
     precio = Column(Float)
 

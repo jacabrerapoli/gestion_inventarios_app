@@ -7,8 +7,6 @@ from models.models import Productos
 
 def crear_producto(producto_dto: ProductoCreateDTO):
     db_producto = Productos(**producto_dto.dict())
-    db_producto.costo = 0
-    db_producto.precio = 0
     session.add(db_producto)
     session.commit()
     session.refresh(db_producto)

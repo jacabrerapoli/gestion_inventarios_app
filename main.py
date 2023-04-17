@@ -81,9 +81,9 @@ async def guardar_transaccion_compras(transaccion_dto: TransaccionCompraDTO):
         raise HTTPException(status_code=400, detail=str(e))
 
 
-@app.get("/tipos_de_transaccion", response_model=List[TransaccionVentaDTO], tags=["Tipos de Transaccion"])
-async def buscar_tipo_de_transaccion_por_tipo(tipo: str):
-    return tipo_transaccion_service.buscar_tipo_transaccion_por_tipo(tipo)
+@app.get("/tipos_de_transaccion", tags=["Tipos de Transaccion"])
+async def buscar_tipos_de_transaccion():
+    return tipo_transaccion_service.buscar_tipos_transaccion()
 
 
 @app.get("/proveedores", response_model=List[ProveedorRequestDTO], tags=["Proveedores"])

@@ -7,8 +7,8 @@ class ProductoDTO(BaseModel):
     marca: str
     linea: str
     descripcion: str
+    cantidad: int
     precio: float
-    costo: float
 
     class Config:
         orm_mode = True
@@ -20,6 +20,8 @@ class ProductoCreateDTO(BaseModel):
     marca: str
     linea: str
     descripcion: str
+    cantidad: int
+    precio: float
 
     class Config:
         orm_mode = True
